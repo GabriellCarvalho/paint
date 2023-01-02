@@ -6,6 +6,7 @@ package lp.paintbrush.classes;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Polygon;
 import java.util.ArrayList;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -23,7 +24,7 @@ public class Poligono extends Ponto {
         g.setColor(cor);
     }
 
-    public void pegarPontos(Graphics g) {
+    public void desenharPoligono(Graphics g) {
         int xPoints[] = new int[pontos.size()];
         int yPoints[] = new int[pontos.size()];
 
@@ -31,11 +32,12 @@ public class Poligono extends Ponto {
             xPoints[i] = pontos.get(i).x;
             yPoints[i] = pontos.get(i).y;
         }
-
-        for (int i = 1; i < pontos.size(); i++) {
-            g.setColor(cor);
-            g.drawPolygon(xPoints, yPoints, pontos.size());
-        }
+        
+        Polygon poligono = new Polygon(xPoints, yPoints, pontos.size());
+        g.setColor(cor);
+        g.drawPolygon(poligono);
+        g.setColor(corInterna);
+        g.fillPolygon(poligono);
     }
 
     public void limparPontos() {
