@@ -10,13 +10,13 @@ import static java.lang.Math.sqrt;
 import lombok.Getter;
 import lombok.Setter;
 
-
 @Getter
 @Setter
 public class D1 extends Ponto {
 
     private int x1;
     private int y1;
+    protected boolean showArea = false;
 
     public D1() {
         super();
@@ -26,6 +26,10 @@ public class D1 extends Ponto {
 
     @Override
     public void desenha(Graphics g) {
+        if (showArea) {
+            g.setColor(cor);
+            g.drawString(Float.toString(comprimento()), x - 10, y - 10);
+        }
         g.setColor(this.cor);
         g.drawLine(x, y, x1, y1);
     }

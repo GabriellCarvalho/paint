@@ -3,8 +3,11 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package lp.paintbrush.tela;
+
+import lp.paintbrush.classes.Borracha;
 import lp.paintbrush.classes.Cilindro;
 import lp.paintbrush.classes.Circulo;
+import lp.paintbrush.classes.D1;
 import lp.paintbrush.classes.Piramide;
 import lp.paintbrush.classes.Poligono;
 import lp.paintbrush.classes.Ponto;
@@ -14,16 +17,18 @@ import lp.paintbrush.classes.Spray;
 public class FrPaint extends javax.swing.JFrame {
 
     enum TipoFigura {
-        tpPonto, tpRetangulo, tpCirculo, tpCilindro, tpPiramide, tpSpray, tpPoligono
+        tpPonto, tpRetangulo, tpCirculo, tpCilindro, tpPiramide, tpSpray, tpPoligono, tpBorracha, tpReta
     };
 
     Ponto p = new Ponto();
+    D1 re = new D1();
     Retangulo r = new Retangulo();
     Circulo c = new Circulo();
     Cilindro cl = new Cilindro();
     Piramide pr = new Piramide();
     Poligono po = new Poligono();
     Spray sp = new Spray();
+    Borracha b = new Borracha();
 
     private TipoFigura tipoFigura = TipoFigura.tpPonto;
 
@@ -58,10 +63,17 @@ public class FrPaint extends javax.swing.JFrame {
         btnSpray = new javax.swing.JButton();
         btnPoligono = new javax.swing.JButton();
         btnDesenhar = new javax.swing.JButton();
+        btnBorracha = new javax.swing.JButton();
+        btnReta = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jpTela.setBackground(new java.awt.Color(204, 255, 255));
+        jpTela.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseDragged(java.awt.event.MouseEvent evt) {
+                jpTelaMouseDragged(evt);
+            }
+        });
         jpTela.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 jpTelaMousePressed(evt);
@@ -191,36 +203,51 @@ public class FrPaint extends javax.swing.JFrame {
             }
         });
 
+        btnBorracha.setText("Borracha");
+        btnBorracha.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBorrachaActionPerformed(evt);
+            }
+        });
+
+        btnReta.setText("Reta");
+        btnReta.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnReta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRetaActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jColorChooser, javax.swing.GroupLayout.DEFAULT_SIZE, 991, Short.MAX_VALUE))
+                    .addComponent(jColorChooser, javax.swing.GroupLayout.DEFAULT_SIZE, 987, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 91, Short.MAX_VALUE)
+                                .addComponent(btnRetangulo, javax.swing.GroupLayout.DEFAULT_SIZE, 91, Short.MAX_VALUE)
+                                .addComponent(btnCirculo, javax.swing.GroupLayout.DEFAULT_SIZE, 91, Short.MAX_VALUE)
+                                .addComponent(btnCilindro, javax.swing.GroupLayout.DEFAULT_SIZE, 91, Short.MAX_VALUE)
+                                .addComponent(btnPonto, javax.swing.GroupLayout.DEFAULT_SIZE, 91, Short.MAX_VALUE)
+                                .addComponent(cbArea, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(btnReta, javax.swing.GroupLayout.DEFAULT_SIZE, 91, Short.MAX_VALUE)
+                                .addComponent(btnBorracha, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(btnDesenhar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(btnSpray, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(btnPoligono, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(btnPiramide, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addGap(6, 6, 6)
+                                    .addComponent(jpCor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jpCorInterna, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jpCor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel1)
-                                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(btnDesenhar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(btnSpray, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(btnRetangulo, javax.swing.GroupLayout.DEFAULT_SIZE, 86, Short.MAX_VALUE)
-                                    .addComponent(btnCirculo, javax.swing.GroupLayout.DEFAULT_SIZE, 86, Short.MAX_VALUE)
-                                    .addComponent(btnCilindro, javax.swing.GroupLayout.DEFAULT_SIZE, 86, Short.MAX_VALUE)
-                                    .addComponent(btnPonto, javax.swing.GroupLayout.DEFAULT_SIZE, 86, Short.MAX_VALUE)
-                                    .addComponent(btnPiramide, javax.swing.GroupLayout.DEFAULT_SIZE, 86, Short.MAX_VALUE)
-                                    .addComponent(cbArea, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(btnPoligono, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                                .addGap(6, 6, 6)
+                                .addComponent(jpCorInterna, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jpTela, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addGap(0, 0, 0))
@@ -231,9 +258,11 @@ public class FrPaint extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(cbArea, javax.swing.GroupLayout.DEFAULT_SIZE, 22, Short.MAX_VALUE)
+                        .addComponent(cbArea, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGap(3, 3, 3)
                         .addComponent(btnPonto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(9, 9, 9)
+                        .addComponent(btnReta, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnRetangulo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -244,18 +273,21 @@ public class FrPaint extends javax.swing.JFrame {
                         .addComponent(btnPiramide, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnSpray, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGap(7, 7, 7)
                         .addComponent(btnPoligono, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnDesenhar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 54, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnBorracha)
+                        .addGap(18, 18, 18)
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jpCor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jpCorInterna, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jpCorInterna, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(6, 6, 6))
                     .addComponent(jpTela, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jColorChooser, javax.swing.GroupLayout.PREFERRED_SIZE, 281, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -279,9 +311,17 @@ public class FrPaint extends javax.swing.JFrame {
                     p.setCor(jpCor.getBackground());
                     p.desenha(jpTela.getGraphics());
                     break;
+                case tpReta:
+                    re.setX(evt.getX());
+                    re.setY(evt.getY());
+                    break;
                 case tpRetangulo:
                     r.setX(evt.getX());
                     r.setY(evt.getY());
+                    break;
+                case tpBorracha:
+                    b.setX(evt.getX());
+                    b.setY(evt.getY());
                     break;
                 case tpCirculo:
                     c.setX(evt.getX());
@@ -316,6 +356,13 @@ public class FrPaint extends javax.swing.JFrame {
     private void jpTelaMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jpTelaMouseReleased
         if (null != tipoFigura)
             switch (tipoFigura) {
+                case tpReta:
+                    re.setX1(evt.getX());
+                    re.setY1(evt.getY());
+                    re.setCor(jpCor.getBackground());
+                    re.setShowArea(cbArea.getState());
+                    re.desenha(jpTela.getGraphics());
+                    break;
                 case tpRetangulo:
                     r.setBase(evt.getX() - r.getX());
                     r.setLargura(evt.getY() - r.getY());
@@ -323,6 +370,10 @@ public class FrPaint extends javax.swing.JFrame {
                     r.setCorInterna(jpCorInterna.getBackground());
                     r.setShowArea(cbArea.getState());
                     r.desenha(jpTela.getGraphics());
+                    break;
+                case tpBorracha:
+                    b.setCor(jpTela.getBackground());
+                    b.desenha(jpTela.getGraphics());
                     break;
                 case tpCirculo:
                     c.setRaio((evt.getX() - c.getX()) / 2);
@@ -399,6 +450,34 @@ public class FrPaint extends javax.swing.JFrame {
         po.limparPontos();
     }//GEN-LAST:event_btnDesenharActionPerformed
 
+    private void btnBorrachaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBorrachaActionPerformed
+        // TODO add your handling code here:
+        tipoFigura = TipoFigura.tpBorracha;
+    }//GEN-LAST:event_btnBorrachaActionPerformed
+
+    private void btnRetaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRetaActionPerformed
+        // TODO add your handling code here:
+        tipoFigura = TipoFigura.tpReta;
+    }//GEN-LAST:event_btnRetaActionPerformed
+
+    private void jpTelaMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jpTelaMouseDragged
+        // TODO add your handling code here:
+        switch (tipoFigura) {
+            case tpSpray:
+                sp.setCor(jpCor.getBackground());
+                sp.setX(evt.getX());
+                sp.setY(evt.getY());
+                sp.desenha(jpTela.getGraphics());
+                break;
+            case tpBorracha:
+                b.setX(evt.getX());
+                b.setY(evt.getY());
+                b.setCor(jpTela.getBackground());
+                b.desenha(jpTela.getGraphics());
+                break;
+        }
+    }//GEN-LAST:event_jpTelaMouseDragged
+
     /**
      * @param args the command line arguments
      */
@@ -435,12 +514,14 @@ public class FrPaint extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnBorracha;
     private javax.swing.JButton btnCilindro;
     private javax.swing.JButton btnCirculo;
     private javax.swing.JButton btnDesenhar;
     private javax.swing.JButton btnPiramide;
     private javax.swing.JButton btnPoligono;
     private javax.swing.JButton btnPonto;
+    private javax.swing.JButton btnReta;
     private javax.swing.JButton btnRetangulo;
     private javax.swing.JButton btnSpray;
     private java.awt.Checkbox cbArea;
